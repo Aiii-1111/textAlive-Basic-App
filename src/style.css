@@ -19,3 +19,17 @@ button:hover
 {
   background-color:#A8EDF0 ;
 }
+
+#media
+{
+  position: fixed;
+  right: 1%;
+  bottom: 1%;
+}
+
+#song-info
+{
+  position: fixed;
+  left: 1%;
+  bottom: 1%;
+}

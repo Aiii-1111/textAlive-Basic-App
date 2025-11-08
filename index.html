@@ -8,15 +8,21 @@
   </head>
   
   <body>
-    <div id="media"></div>
     <div id="toolbar">
       <button id="play-button">Play</button>
       <button id="pause-button">Pause</button>
       <button id="rewind-button">Rewind</button>
-      <p>Enter Piapro Song Url</p>
-      <input id="url-input" type="text"><button id="submit_button">Submit</button>
+      <p>Enter Piapro Song Url<br><span id="url-output-msg"></span></p>
+      <input id="url-input" type="text"><button id="submit-button">Submit</button>
     </div>
     <div id="lyric-app">
+      <span id="current-word-display"></span>
+    </div>
+    <div id="media"></div>
+    <div id="song-info">
+      <p>Song Name: <span id="song-name-display"></span></p>
+      <p>Producer: <span id="producer-display"></span></p>
+      <p>Current Phrase: <span id="phrase-display"></span></p>
     </div>
     <script src="src\main.js" type="module"></script>
   </body>

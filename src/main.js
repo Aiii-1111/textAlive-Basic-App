@@ -6,6 +6,11 @@ const pause_button = document.querySelector("#pause-button");
 const rewind_button = document.querySelector("#rewind-button");
 const submit_button = document.querySelector("#submit-button");
 
+const song_name_display = document.querySelector("#song-name-display");
+const producer_display = document.querySelector("#producer-display");
+const phrase_display = document.querySelector("#phrase-display");
+
+//const url_output_msg = document.querySelector("#url-output-msg"); 
 let song_url;
 
 play_button.disabled = true;
@@ -20,27 +25,28 @@ function addButtonEventListeners()
   rewind_button.disabled = false;
   submit_button.disabled = false;
 
-  play_button.addEventListener("click", player.requestPlay());
-  pause_button.addEventListener("click", player.requestPause());
-  rewind_button.addEventListener("click", player.requestMediaSeek(0));
+  play_button.addEventListener("click", () => player.requestPlay());
+  pause_button.addEventListener("click", () => player.requestPause());
+  rewind_button.addEventListener("click", () => player.requestMediaSeek(0));
 }
 
 function submitUrl()
 {
   try
   {
+    console.log(document.getElementById("#url-input").value);
     song_url = new URL(document.getElementById("#url-input").value);
     player.createFromSongUrl(song_url);
-    submit_button.disabled = true;
+    //submit_button.disabled = true;
+    //player.createFromSongUrl("https://piapro.jp/t/Tzx5");
   }
   catch{}
-  debug.log("url submitted successfully");
 }
 
 function onAppReady(app)
 {
   submit_button.disabled = false;
-  submit_button.addEventListener("click",submitUrl());
+  submit_button.addEventListener("click", () => submitUrl());
 }
 
 function onTimerReady(t)
@@ -49,7 +55,7 @@ function onTimerReady(t)
 }
 
 
-function onTimerUpdate(t)
+function onTimerUpdate(position)
 {
 
 }
@@ -58,6 +64,4 @@ function onTimerUpdate(t)
 const player = new Player({app : {token: "k0IXqtc8pHZgl9mz"},
   mediaBannerElement: document.querySelector("#media")});
 
-submit_button.addEventListener("click",submitUrl());
-
-player.addListeners({onAppReady,onTimerReady,onTimerUpdate});
+player.addListener({onAppReady,onTimerReady,onTimerUpdate});
