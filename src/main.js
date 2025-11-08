@@ -10,7 +10,6 @@ const song_name_display = document.querySelector("#song-name-display");
 const producer_display = document.querySelector("#producer-display");
 const phrase_display = document.querySelector("#phrase-display");
 
-//const url_output_msg = document.querySelector("#url-output-msg"); 
 let song_url;
 
 play_button.disabled = true;
@@ -21,9 +20,10 @@ submit_button.disabled = true;
 //setup listeners and methods
 function addButtonEventListeners()
 {
+  play_button.disabled = false;
   pause_button.disabled = false;
   rewind_button.disabled = false;
-  submit_button.disabled = false;
+  //submit_button.disabled = false;
 
   play_button.addEventListener("click", () => player.requestPlay());
   pause_button.addEventListener("click", () => player.requestPause());
@@ -34,11 +34,10 @@ function submitUrl()
 {
   try
   {
-    console.log(document.getElementById("#url-input").value);
-    song_url = new URL(document.getElementById("#url-input").value);
+    song_url = new URL(document.getElementById("url-input").value);
+    console.log("working: ",song_url);
     player.createFromSongUrl(song_url);
     //submit_button.disabled = true;
-    //player.createFromSongUrl("https://piapro.jp/t/Tzx5");
   }
   catch{}
 }
@@ -52,16 +51,18 @@ function onAppReady(app)
 function onTimerReady(t)
 {
   addButtonEventListeners();
+  song_name_display.textContent = player.data.song.name;
+  producer_display.textContent = player.data.song.artist.name;
 }
 
-
-function onTimerUpdate(position)
+function onTimerUpdate()
 {
-
+  const current_phrase = player.video.findPhrase(player.timer.position)?.text;
+  current_phrase && (phrase_display.textContent = current_phrase);
 }
 
 //initialise player
 const player = new Player({app : {token: "k0IXqtc8pHZgl9mz"},
-  mediaBannerElement: document.querySelector("#media")});
+  mediaElement: document.querySelector("#media")});
 
 player.addListener({onAppReady,onTimerReady,onTimerUpdate});
