@@ -1,10 +1,10 @@
-import {Player} from textalive-app-api;
+import { Player } from "textalive-app-api";
 
 //get html elements
 const play_button = document.querySelector("#play-button");
 const pause_button = document.querySelector("#pause-button");
 const rewind_button = document.querySelector("#rewind-button");
-const submit_button = document.querySelector("#submit-button")
+const submit_button = document.querySelector("#submit-button");
 
 let song_url;
 
@@ -27,7 +27,14 @@ function addButtonEventListeners()
 
 function submitUrl()
 {
-  song_url = document.getElementById("#url-input").value;
+  try
+  {
+    song_url = new URL(document.getElementById("#url-input").value);
+    player.createFromSongUrl(song_url);
+    submit_button.disabled = true;
+  }
+  catch{}
+  debug.log("url submitted successfully");
 }
 
 function onAppReady(app)
@@ -36,7 +43,16 @@ function onAppReady(app)
   submit_button.addEventListener("click",submitUrl());
 }
 
-//function onTimerReady()
+function onTimerReady(t)
+{
+  addButtonEventListeners();
+}
+
+
+function onTimerUpdate(t)
+{
+
+}
 
 //initialise player
 const player = new Player({app : {token: "k0IXqtc8pHZgl9mz"},
@@ -44,4 +60,4 @@ const player = new Player({app : {token: "k0IXqtc8pHZgl9mz"},
 
 submit_button.addEventListener("click",submitUrl());
 
-player.addListeners({onAppReady,});
+player.addListeners({onAppReady,onTimerReady,onTimerUpdate});
