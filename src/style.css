@@ -33,3 +33,14 @@ button:hover
   left: 1%;
   bottom: 1%;
 }
+
+@font-face {
+  font-family: "Yusei Magic";
+  src: url("public/YuseiMagic-Regular.ttf") format("truetype");
+}
+
+#current-word-display
+{
+  font-size: 1000%;
+  font-family: "Yusei Magic", sans-serif;
+}

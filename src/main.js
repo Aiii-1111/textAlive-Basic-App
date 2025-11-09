@@ -9,6 +9,7 @@ const submit_button = document.querySelector("#submit-button");
 const song_name_display = document.querySelector("#song-name-display");
 const producer_display = document.querySelector("#producer-display");
 const phrase_display = document.querySelector("#phrase-display");
+const current_word_display = document.querySelector("#current-word-display");
 
 let song_url;
 
@@ -48,21 +49,24 @@ function onAppReady(app)
   submit_button.addEventListener("click", () => submitUrl());
 }
 
-function onTimerReady(t)
+function onVideoReady(v)
 {
   addButtonEventListeners();
   song_name_display.textContent = player.data.song.name;
   producer_display.textContent = player.data.song.artist.name;
 }
 
-function onTimerUpdate()
+function onTimeUpdate()
 {
   const current_phrase = player.video.findPhrase(player.timer.position)?.text;
+  const current_word = player.video.findWord(player.timer.position)?.text;
+  
   current_phrase && (phrase_display.textContent = current_phrase);
+  current_word && (current_word_display.textContent = current_word);
 }
 
 //initialise player
 const player = new Player({app : {token: "k0IXqtc8pHZgl9mz"},
   mediaElement: document.querySelector("#media")});
 
-player.addListener({onAppReady,onTimerReady,onTimerUpdate});
+player.addListener({onAppReady,onVideoReady,onTimeUpdate});
